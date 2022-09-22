@@ -1,0 +1,92 @@
+body{
+    background : #141319;
+    color: #dadada;
+}
+
+h1, #title{
+    color: #7b7aa4;
+}
+
+/* The navigation bar */
+#navbarcomp {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    margin-bottom: 15px;
+}
+
+/* Links inside the navbar */
+#navbarcomp  .navel, #title  {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change background on mouse-over */
+#navbarcomp  .navel:hover {
+    background: #ddd;
+    color: black;
+}
+
+/* Main content */
+.main {
+    margin-top: 30px; /* Add a top margin to avoid content overlay */
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.pokedex-card{
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    border : 1px solid #7b7aa4;
+    border-radius : 5px;
+    background: #30303d;
+    box-shadow: inset -1px 3px 8px 5px #7b7aa4, 2px 5px 16px 0px #7b7aa4, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+input{
+    margin-bottom: 15px;
+}
+
+.pokedex-img{
+    align-self: center;
+    margin: 0px auto;
+}
+
+@media (min-width: 700px){
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 3px 3px;
+
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 5px 5px;
+
+    }
+}
+
+#navbarcomp #title{
+    color: #7b7aa4;
+}
+
+#app{
+    margin-top: 3em;
+}
