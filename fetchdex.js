@@ -69,12 +69,19 @@ function putInCache(data){
     for(let pokemon of pokemons){
         let pkmn = new Pokemon(pokemon.name, i, pokemon.url);
         liste.push(pkmn);
-        display(pkmn);
+        //display(pkmn);
         i++;
     }
+    displayList(liste);
 
 }
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+function displayList(li){
+    for (let pokemon of li){
+        display(pokemon);
+    }
 }
