@@ -16,14 +16,9 @@ let Pokemon = function(name, id, url, possessed){
     }else{
         this.possessed = false;
     }
-    //Pour tester
-    if (id < 151){
-        this.possessed = true;
-    }
 }
 
 function fetchdex() {
-    //fetch("https://localhost:7036/api/Pokemons")
     fetch("https://pokeapi.co/api/v2/pokemon/?limit=898")
         .then((response) => response.json())
         .then((data) => putInCache(data))
@@ -34,17 +29,58 @@ function fetchdex() {
 }
 
 function fetchdexPossessed() {
-    fetch("https://pokeapi.co/api/v2/pokemon/?limit=898")
-        .then((response) => response.json())
-        .then((data) => putInCachePossessed(data))
+    fetch('https://localhost:7036/api/Pokemons')
+        .then((response)=> response.json())
+        .then((data)=>putInCachePossessed(data))
         .catch((erreur) => {
-            console.log('erreur !!!!!!');
+            console.log('erreur !!!!!!!!!!!!');
             console.log(erreur)
         });
 }
 
+function putInCache(data){
+    let pokemons = data.results;
+    document.getElementById('pokelist').textContent = '';
+    liste = [];
+    let i = 1;
+    for(let pokemon of pokemons){
+        let pkmn = new Pokemon(pokemon.name, i, pokemon.url);
+        liste.push(pkmn);
+        i++;
+    }
+    displayList(liste);
+}
 
-function display(pkmn){ //parametr: object Pokemon
+function displayList(li){
+
+    console.log(li.length);
+    for (let pokemon of li){
+        display(pokemon);
+    }
+}
+
+function putInCachePossessed(data){
+    let pokemons = data;
+
+    let i = 1;
+    liste = [];
+    document.getElementById('pokelist').textContent = '';
+    for(let pokemon of pokemons){
+        //Fetch sur PokeApi avec l'id de chaque pokemon de la collection
+        fetch("https://pokeapi.co/api/v2/pokemon/"+pokemon.id)
+            .then((response)=> response.json())
+            .then((pokemonbyid)=> {
+                display(pokemonbyid);
+            } )
+            .catch((erreur) => {
+                console.log('erreur !!!!!!!!!!!!');
+                console.log(erreur)
+            });
+    }
+}
+
+function display(pkmn){ //parametre: object Pokemon
+
     let card = document.createElement("div");
     let nom = document.createElement("div");
     let img = document.createElement("img");
@@ -78,53 +114,6 @@ function display(pkmn){ //parametr: object Pokemon
     document.getElementById("pokelist").appendChild(card);
 }
 
-function putInCache(data){
-    let pokemons = data.results;
-    console.log(pokemons);
-    liste = [];
-    let i = 1;
-    for(let pokemon of pokemons){
-        let pkmn = new Pokemon(pokemon.name, i, pokemon.url);
-        liste.push(pkmn);
-        i++;
-    }
-    displayList(liste);
-
-}
-
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
-function displayList(li){
-    let pokelist = document.getElementById("pokelist");
-    pokelist.textContent = "";
-    for (let pokemon of li){
-        display(pokemon);
-    }
-}
-
-
-function putInCachePossessed(data){
-    let pokemons = data.results;
-    console.log(pokemons);
-    let i = 1;
-    liste = [];
-    for(let pokemon of pokemons){
-
-        let pkmn = new Pokemon(pokemon.name, i, pokemon.url);
-        if (pkmn.possessed){
-            liste.push(pkmn);
-        }
-        i++;
-    }
-    displayList(liste);
-
-}
-function filterPossessed(){
-    for (let pokemon of liste){
-        if (pokemon.possessed == true) {
-            display(pokemon);
-        }
-    }
 }
