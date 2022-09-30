@@ -8,3 +8,13 @@ Vue.component('nav-bar', {
 })
 
 new Vue({ el: '#navbarcomp' })
+
+Vue.component('filterpossessed-button',{
+    template: '<button onClick="fetchdexPossessed()">Possédés</button>'
+})
+
+Vue.component('filterall-button',{
+    template: '<button onClick="fetchdex()">Tous</button>'
+})
+
+new Vue({ el : '#filters'})

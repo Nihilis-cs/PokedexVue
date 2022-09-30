@@ -6,16 +6,6 @@ var app = new Vue({
 })
 var liste = [];
 
-function fetchdex() {
-    fetch("https://pokeapi.co/api/v2/pokemon/?limit=898")
-        .then((response) => response.json())
-        .then((data) => putInCache(data))
-        .catch((erreur) => {
-            console.log('erreur !!!!!!!!!!!!');
-            console.log(erreur)
-        });
-}
-
 let Pokemon = function(name, id, url, possessed){
     this.name = capitalizeFirstLetter(name);
     this.id = id;
@@ -26,28 +16,54 @@ let Pokemon = function(name, id, url, possessed){
     }else{
         this.possessed = false;
     }
-
+    //Pour tester
+    if (id < 151){
+        this.possessed = true;
+    }
 }
+
+function fetchdex() {
+    //fetch("https://localhost:7036/api/Pokemons")
+    fetch("https://pokeapi.co/api/v2/pokemon/?limit=898")
+        .then((response) => response.json())
+        .then((data) => putInCache(data))
+        .catch((erreur) => {
+            console.log('erreur !!!!!!!!!!!!');
+            console.log(erreur)
+        });
+}
+
+function fetchdexPossessed() {
+    fetch("https://pokeapi.co/api/v2/pokemon/?limit=898")
+        .then((response) => response.json())
+        .then((data) => putInCachePossessed(data))
+        .catch((erreur) => {
+            console.log('erreur !!!!!!');
+            console.log(erreur)
+        });
+}
+
+
 function display(pkmn){ //parametr: object Pokemon
-    let div = document.createElement("div");
+    let card = document.createElement("div");
     let nom = document.createElement("div");
     let img = document.createElement("img");
     let check = document.createElement("input");
     let label = document.createElement("label");
     let div2 = document.createElement("div");
 
-    div.setAttribute("data-url", pkmn.url);
-    div.classList.add("pokedex-card");
+    card.setAttribute("data-url", pkmn.url);
+    card.classList.add("pokedex-card");
 
     img.classList.add("pokedex-img");
     img.src= `img/${pkmn.id}.png`;
-    div.appendChild(img);
+    card.appendChild(img);
 
     nom.innerHTML = `<h3>${pkmn.id} - ${pkmn.name}</h3>`;
-    div.appendChild(nom);
+    card.appendChild(nom);
 
     check.setAttribute("type", "checkbox");
-    if (pkmn.possessed == true){
+    if (pkmn.possessed){
         check.checked = true;
     }
     check.id= `${pkmn.id}`;
@@ -56,20 +72,20 @@ function display(pkmn){ //parametr: object Pokemon
 
     label.setAttribute("for", check.name);
     label.setAttribute("value", "true");
-    label.innerHTML = `Possédé`
+    label.innerHTML = `Possédé`;
     div2.appendChild(label);
-    div.appendChild(div2);
-    document.getElementById("pokelist").appendChild(div);
+    card.appendChild(div2);
+    document.getElementById("pokelist").appendChild(card);
 }
 
 function putInCache(data){
     let pokemons = data.results;
     console.log(pokemons);
+    liste = [];
     let i = 1;
     for(let pokemon of pokemons){
         let pkmn = new Pokemon(pokemon.name, i, pokemon.url);
         liste.push(pkmn);
-        //display(pkmn);
         i++;
     }
     displayList(liste);
@@ -81,7 +97,34 @@ function capitalizeFirstLetter(string) {
 }
 
 function displayList(li){
+    let pokelist = document.getElementById("pokelist");
+    pokelist.textContent = "";
     for (let pokemon of li){
         display(pokemon);
+    }
+}
+
+
+function putInCachePossessed(data){
+    let pokemons = data.results;
+    console.log(pokemons);
+    let i = 1;
+    liste = [];
+    for(let pokemon of pokemons){
+
+        let pkmn = new Pokemon(pokemon.name, i, pokemon.url);
+        if (pkmn.possessed){
+            liste.push(pkmn);
+        }
+        i++;
+    }
+    displayList(liste);
+
+}
+function filterPossessed(){
+    for (let pokemon of liste){
+        if (pokemon.possessed == true) {
+            display(pokemon);
+        }
     }
 }

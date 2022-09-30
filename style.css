@@ -1,19 +1,33 @@
+:root {
+    /*Palet lospec https://lospec.com/palette-list/slime-16*/
+    --main-bg-color: #25284D;
+    --second-bg-color: #366AB3;
+    --third-bg-color: #5B95E5 ;
+    --main-text-color: #b8c0cc;
+    --second-text-color: #7a8799;
+    --main-cardbg-color: #3d4e65;
+    --second-cardbg-color: #596880;
+
+
+}
+
+
 body{
-    background : #141319;
-    color: #dadada;
+    background : var(--main-bg-color);
+    color: var(--main-text-color);
 }
 
 h1, #title{
-    color: #7b7aa4;
+    color: var(--second-text-color);
 }
 
 /* The navigation bar */
 #navbarcomp {
     overflow: hidden;
-    background-color: #333;
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
+    background-color: var(--second-bg-color);
+    /*position: fixed; !* Set the navbar to fixed position *!*/
+    /*top: 0; !* Position the navbar at the top of the page *!*/
+    /*width: 100%; !* Full width *!*/
     margin-bottom: 15px;
 }
 
@@ -29,7 +43,7 @@ h1, #title{
 
 /* Change background on mouse-over */
 #navbarcomp  .navel:hover {
-    background: #ddd;
+    background: var(--second-bg-color);
     color: black;
 }
 
@@ -50,7 +64,7 @@ h1, #title{
     justify-content: center;
     border : 1px solid #7b7aa4;
     border-radius : 5px;
-    background: #30303d;
+    background: var(--main-cardbg-color);
     box-shadow: inset -1px 3px 8px 5px #7b7aa4, 2px 5px 16px 0px #7b7aa4, 5px 5px 15px 5px rgba(0,0,0,0);
 }
 
@@ -84,7 +98,7 @@ input{
 }
 
 #navbarcomp #title{
-    color: #7b7aa4;
+    color: var(--second-text-color);
 }
 
 #app{
